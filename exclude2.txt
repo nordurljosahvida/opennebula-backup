@@ -1,0 +1,17 @@
+/mnt/*/boot/
+/mnt/*/lib/modules
+/mnt/*/etc/modules
+/mnt/*/etc/lilo.conf
+/mnt/*/etc/fstab
+/mnt/*/etc/mtab
+/mnt/*/proc
+/mnt/*/dev
+/mnt/*/lost+found/
+/mnt/*/var/log
+/mnt/*/etc/network/interfaces
+/mnt/*/sys
+/mnt/*/tmp
+/mnt/*/run
+/mnt/*/mnt
+/mnt/*/media
+/mnt/*/usr/src/**
