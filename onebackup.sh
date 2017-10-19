@@ -3,7 +3,8 @@
 # vars
 
 now=$(date "+%Y-%m-%d_%H-%M-%S")
-fullbackupday=0
+today=$(date +"%u")
+fullbackupday=0 # monday is 1, sunday is 7
 datastoresrootdir=/var/lib/one/datastores/ # include trailing slash!
 backupsrootdir=/media/externaldrive/backups/ # include trailing slash!
 logbasedir=/root/scripts/logs/fullbackup/ # include trailing slash!
