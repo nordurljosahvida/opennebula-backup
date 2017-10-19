@@ -1,0 +1,261 @@
+# vars
+
+# /vars
+
+LOGFILE=/root/scripts/logs/fullbackup/fullbackup-$(date "+%Y-%m-%d_%H-%M-%S").log
+
+echo "Starting fullbackup"
+
+# full local system backup [https://wiki.archlinux.org/index.php/full_system_backup_with_rsync]
+
+echo Backing up local root
+
+# . /root/.gpgpp && export PASSPHRASE && duplicity --encrypt-key DD22D5E8 --exclude-filelist=/root/scripts/fullbackup/exclude1.txt / file:///media/raid01/backups/local/
+
+# Full vm root clone
+
+# List running vms [name of vms must start with "y"]
+
+echo "Backing up virtual machines' roots"
+
+mapfile -t array < <(onevm list | grep runn | egrep -o "(\s(y\S+))" | cut -d " " -f 2 | sed -e 's/$/.example.org/' | sed -e 's/^/root@/' | xargs -L1 echo)
+
+oldserversbackupdir="/media/raid01/backups/oldservers-beforeraidcrash201604/" #include trailing slash!
+
+if [ ! -z "${array[1]}" ]; then
+
+	mkdir -p /mnt/sshfs-"${array[1]}"
+
+	sshfs -o IdentityFile=/root/.ssh/id_rsa root@192.168.1.50:/ /mnt/sshfs-"${array[1]}"
+
+	. /root/.gpgpp && export PASSPHRASE && duplicity --encrypt-key DD22D5E8 --exclude-globbing-filelist=/root/scripts/fullbackup/exclude2.txt \
+/mnt/sshfs-"${array[1]}" file://$oldserversbackupdir"${array[1]}"
+
+	if [ ! -z "${array[2]}" ]; then
+
+		mkdir -p /mnt/sshfs-"${array[2]}"
+
+		sshfs -o IdentityFile=/root/.ssh/id_rsa root@192.168.1.50:/ /mnt/sshfs-"${array[2]}"
+
+		. /root/.gpgpp && export PASSPHRASE && duplicity --encrypt-key DD22D5E8 --exclude-globbing-filelist=/root/scripts/fullbackup/exclude2.txt \
+/mnt/sshfs-"${array[2]}" file://$oldserversbackupdir"${array[2]}"
+
+		if [ ! -z "${array[3]}" ]; then
+
+			mkdir -p /mnt/sshfs-"${array[3]}"
+
+			sshfs -o IdentityFile=/root/.ssh/id_rsa root@192.168.1.50:/ /mnt/sshfs-"${array[3]}"
+
+			. /root/.gpgpp && export PASSPHRASE && duplicity --encrypt-key DD22D5E8 --exclude-globbing-filelist=/root/scripts/fullbackup/exclude2.txt \
+/mnt/sshfs-"${array[3]}" file://$oldserversbackupdir"${array[3]}"
+
+			if [ ! -z "${array[4]}" ]; then
+
+				mkdir -p /mnt/sshfs-"${array[4]}"
+
+				sshfs -o IdentityFile=/root/.ssh/id_rsa root@192.168.1.50:/ /mnt/sshfs-"${array[4]}"
+
+				. /root/.gpgpp && export PASSPHRASE && duplicity --encrypt-key DD22D5E8 --exclude-globbing-filelist=/root/scripts/fullbackup/exclude2.txt \
+/mnt/sshfs-"${array[4]}" file://$oldserversbackupdir"${array[4]}"
+
+				if [ ! -z "${array[5]}" ]; then
+
+					mkdir -p /mnt/sshfs-"${array[5]}"
+
+					sshfs -o IdentityFile=/root/.ssh/id_rsa root@192.168.1.50:/ /mnt/sshfs-"${array[5]}"
+
+					. /root/.gpgpp && export PASSPHRASE && duplicity --encrypt-key DD22D5E8 --exclude-globbing-filelist=/root/scripts/fullbackup/exclude2.txt \
+/mnt/sshfs-"${array[5]}" file://$oldserversbackupdir"${array[5]}"
+
+					if [ ! -z "${array[6]}" ]; then
+
+						mkdir -p /mnt/sshfs-"${array[6]}"
+
+						sshfs -o IdentityFile=/root/.ssh/id_rsa root@192.168.1.50:/ /mnt/sshfs-"${array[6]}"
+
+						. /root/.gpgpp && export PASSPHRASE && duplicity --encrypt-key DD22D5E8 --exclude-globbing-filelist=/root/scripts/fullbackup/exclude2.txt \
+/mnt/sshfs-"${array[6]}" file://$oldserversbackupdir"${array[6]}"
+
+						if [ ! -z "${array[7]}" ]; then
+
+							mkdir -p /mnt/sshfs-"${array[7]}"
+
+							sshfs -o IdentityFile=/root/.ssh/id_rsa root@192.168.1.50:/ /mnt/sshfs-"${array[7]}"
+
+							. /root/.gpgpp && export PASSPHRASE && duplicity --encrypt-key DD22D5E8 --exclude-globbing-filelist=/root/scripts/fullbackup/exclude2.txt \
+/mnt/sshfs-"${array[7]}" file://$oldserversbackupdir"${array[7]}"
+
+							if [ ! -z "${array[8]}" ]; then
+
+								mkdir -p /mnt/sshfs-"${array[8]}"
+
+								sshfs -o IdentityFile=/root/.ssh/id_rsa root@192.168.1.50:/ /mnt/sshfs-"${array[8]}"
+
+								. /root/.gpgpp && export PASSPHRASE && duplicity --encrypt-key DD22D5E8 --exclude-globbing-filelist=/root/scripts/fullbackup/exclude2.txt \
+/mnt/sshfs-"${array[8]}" file://$oldserversbackupdir"${array[8]}"
+
+								if [ ! -z "${array[9]}" ]; then
+
+									mkdir -p /mnt/sshfs-"${array[9]}"
+
+									sshfs -o IdentityFile=/root/.ssh/id_rsa root@192.168.1.50:/ /mnt/sshfs-"${array[9]}"
+
+									. /root/.gpgpp && export PASSPHRASE && duplicity --encrypt-key DD22D5E8 --exclude-globbing-filelist=/root/scripts/fullbackup/exclude2.txt \
+/mnt/sshfs-"${array[9]}" file://$oldserversbackupdir"${array[9]}"
+
+									if [ ! -z "${array[10]}" ]; then
+
+										mkdir -p /mnt/sshfs-"${array[10]}"
+
+										sshfs -o IdentityFile=/root/.ssh/id_rsa root@192.168.1.50:/ /mnt/sshfs-"${array[10]}"
+
+										. /root/.gpgpp && export PASSPHRASE && duplicity --encrypt-key DD22D5E8 --exclude-globbing-filelist=/root/scripts/fullbackup/exclude2.txt \
+/mnt/sshfs-"${array[10]}" file://$oldserversbackupdir"${array[10]}"
+
+											if [ ! -z "${array[11]}" ]; then
+
+											mkdir -p /mnt/sshfs-"${array[11]}"
+
+											sshfs -o IdentityFile=/root/.ssh/id_rsa root@192.168.1.50:/ /mnt/sshfs-"${array[11]}"
+
+											. /root/.gpgpp && export PASSPHRASE && duplicity --encrypt-key DD22D5E8 --exclude-globbing-filelist=/root/scripts/fullbackup/exclude2.txt \
+/mnt/sshfs-"${array[11]}" file://$oldserversbackupdir"${array[11]}"
+
+											else echo No other VMs found
+
+											fi
+
+										else echo No other VMs found
+
+										fi
+
+									else echo No other VMs found
+
+									fi
+
+								else echo No other VMs found
+
+								fi
+
+							else echo No other VMs found
+
+							fi
+
+						else echo No other VMs found
+
+						fi
+
+					else echo No other VMs found
+
+					fi
+
+				else echo No other VMs found
+
+				fi
+
+			else echo No other VMs found
+
+			fi
+
+		else echo No other VMs found
+
+		fi
+
+	else echo No other VMs found
+
+	fi
+
+else echo No other VMs found
+
+fi
+
+exit #debug
+
+. /root/.passphrase duplicity --encrypt-key DD22D5E8 --exclude-filelist=/root/scripts/fullbackup/exclude2.txt -e 'ssh -o IdentityFile=/root/.ssh/id_rsa' root@192.168.1.111:/ "$oldserversbackupdir"xywp01/
+. /root/.passphrase duplicity --encrypt-key DD22D5E8 --exclude-filelist=/root/scripts/fullbackup/exclude2.txt -e 'ssh -o IdentityFile=/root/.ssh/id_rsa' root@192.168.1.113:/ "$oldserversbackupdir"xyca01/
+. /root/.passphrase duplicity --encrypt-key DD22D5E8 --exclude-filelist=/root/scripts/fullbackup/exclude2.txt -e 'ssh -o IdentityFile=/root/.ssh/id_rsa' root@192.168.1.114:/ "$oldserversbackupdir"xyst01/
+. /root/.passphrase duplicity --encrypt-key DD22D5E8 --exclude-filelist=/root/scripts/fullbackup/exclude2.txt -e 'ssh -o IdentityFile=/root/.ssh/id_rsa' root@192.168.1.115:/ "$oldserversbackupdir"xyrc01/
+. /root/.passphrase duplicity --encrypt-key DD22D5E8 --exclude-filelist=/root/scripts/fullbackup/exclude2.txt -e 'ssh -o IdentityFile=/root/.ssh/id_rsa' root@192.168.1.116:/ "$oldserversbackupdir"xywp02/
+. /root/.passphrase duplicity --encrypt-key DD22D5E8 --exclude-filelist=/root/scripts/fullbackup/exclude2.txt -e 'ssh -o IdentityFile=/root/.ssh/id_rsa' root@192.168.1.117:/ "$oldserversbackupdir"xypc01/
+
+# poweroff vms and backup datastores on sundays
+
+if [ "$(date +"%u")" -eq 7 ];  then
+
+echo Sunday day of week detected: powering off virtual machines and backing up datastores
+
+echo Shutting down VMs...
+
+ssh -t -o IdentityFile=/root/.ssh/id_rsa root@192.168.1.50 'sudo shutdown -h now'
+ssh -t -o IdentityFile=/root/.ssh/id_rsa root@192.168.1.111 'sudo shutdown -h now'
+ssh -t -o IdentityFile=/root/.ssh/id_rsa root@192.168.1.113 'sudo shutdown -h now'
+ssh -t -o IdentityFile=/root/.ssh/id_rsa root@192.168.1.114 'sudo shutdown -h now'
+ssh -t -o IdentityFile=/root/.ssh/id_rsa root@192.168.1.115 'sudo shutdown -h now'
+ssh -t -o IdentityFile=/root/.ssh/id_rsa root@192.168.1.116 'sudo shutdown -h now'
+ssh -t -o IdentityFile=/root/.ssh/id_rsa root@192.168.1.117 'sudo shutdown -h now'
+ssh -t -o IdentityFile=/root/.ssh/id_rsa root@192.168.1.118 'sudo shutdown -h now'
+ssh -t -o IdentityFile=/root/.ssh/id_rsa root@192.168.1.121 'sudo shutdown -h now'
+ssh -t -o IdentityFile=/root/.ssh/id_rsa root@192.168.1.122 'sudo shutdown -h now'
+
+echo Waiting 1 minute for virtual machines shutdown...
+
+sleep 60
+
+echo Checking poweroff status for all VMs...
+
+runningvmcount="$(onevm list | grep -o 'runn' | wc -l)"
+
+if [ $runningvmcount  -eq 0 ];
+
+then	echo No running VMs. Proceeding...
+	rsync -aAXx --info=progress2 /media/raid01/datastores/ /media/raid01/backups/local/media/raid01/datastores/
+
+else	echo "$runningvmcount VM[s] still running, waiting 5 minutes and trying again..."
+	sleep 300 && runningvmcount="$(onevm list | grep -o 'runn' | wc -l)"
+	if [ $runningvmcount  -eq 0 ];
+
+	then	echo No running VMs. Proceeding...
+        	rsync -aAXx --info=progress2 /media/raid01/datastores/ /media/raid01/backups/local/media/raid01/datastores/
+
+	else	echo "$runningvmcount VM[s] still running, waiting 15 minutes and trying again..."
+	        sleep 900 && runningvmcount="$(onevm list | grep -o 'runn' | wc -l)"
+	        if [ $runningvmcount  -eq 0 ];
+
+	        then    echo No running VMs. Proceeding...
+	                rsync -aAXx --info=progress2 /media/raid01/datastores/ /media/raid01/backups/local/media/raid01/datastores/
+
+		else    echo "$runningvmcount VM[s] still running, waiting 45 minutes and trying again..."
+                	sleep 2700 && runningvmcount="$(onevm list | grep -o 'runn' | wc -l)"
+                	if [ $runningvmcount  -eq 0 ];
+
+			then    echo No running VMs. Proceeding...
+                        	rsync -aAXx --info=progress2 /media/raid01/datastores/ /media/raid01/backups/local/media/raid01/datastores/
+
+			else	echo "$runningvmcount VM[s] still running, aborting."
+
+			fi
+
+		fi
+
+	fi
+
+fi
+
+# touch all vms' power
+
+echo "Starting all VMs backup up..."
+
+onevm resume 32,35,36,37,40,46
+
+fi
+
+# Initiate rclone sync
+
+# reference: rclone copy /media/raidnew/<ShareName>/<FolderName> <RemoteName>:<RemoteFolderName> >> $LOGFILE 2>&1
+
+echo Uploading backups to google drive
+
+#rclone -v sync /media/raid01/backups/ drive:/rclone/xxub01/ >> $LOGFILE 2>&1
+rclone -v sync /media/raid01/backups/ drive:/rclone/xxub01/
+
+echo "Done!"
